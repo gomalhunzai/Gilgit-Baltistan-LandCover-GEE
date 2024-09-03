@@ -1,7 +1,7 @@
 # Gilgit-Baltistan-LandCover-GEE
 This repository provides code and final product for "Assessment of Machine Learning Algorithms for Land Cover Classification in a Complex Mountainous Landscape".
 
-Request for GeoTiff version of final land cover product can be sent via email to corrosponfing author (gomal.amin@polyu,edu.hk; gomalhunzai@gmail.com)
+Request for GeoTiff version of final land cover product can be sent via email to corrosponfing author (gomal.amin@polyu.edu.hk; gomalhunzai@gmail.com)
 The data repositoiry will be updated soon, stay tunned ! 
 
 Cite this article
