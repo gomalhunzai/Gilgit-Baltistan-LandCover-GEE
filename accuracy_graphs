@@ -1,0 +1,97 @@
+#Code for visulizing the Recall, Precision and F-1 Score 
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+from matplotlib.colors import LinearSegmentedColormap
+
+# Data for Precision
+land_covers = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
+rf = [0.96, 0.76, 0.60, 0.82, 0.83, 0.85, 0.54, 0.60, 0.91]
+svm = [0.93, 0.02, 0.47, 0.83, 0.74, 0.91, 0.10, 0.17, 0.88]
+gmoMaxEnt = [0.78, 0.62, 0.45, 0.86, 0.79, 0.91, 0.57, 0.05, 0.94]
+cart = [0.90, 0.57, 0.60, 0.77, 0.71, 0.75, 0.51, 0.57, 0.97]
+minimumDistance = [0.82, 0.27, 0.47, 0.73, 0.61, 0.60, 0.59, 0.31, 0.93]
+
+# Data for recall
+# land_covers = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
+# rf = [0.94, 0.86, 0.67, 0.82, 0.74, 0.68, 0.74, 0.68, 0.98]
+# svm = [0.69, 1.00, 0.52, 0.51, 0.56, 0.62, 0.86, 0.65, 0.96]
+# gmoMaxEnt = [0.77, 0.67, 0.55, 0.74, 0.78, 0.63, 0.88, 0.75, 0.79]
+# cart = [0.86, 0.59, 0.57, 0.73, 0.75, 0.68, 0.56, 0.76, 0.93]
+# minimumDistance = [0.62, 0.32, 0.54, 0.53, 0.67, 0.75, 0.51, 0.39, 0.94]
+
+
+# # Data for F1-Score
+# land_covers = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
+# rf = [0.95, 0.80, 0.64, 0.82, 0.78, 0.76, 0.62, 0.64, 0.94]
+# svm = [0.79, 0.05, 0.49, 0.63, 0.63, 0.74, 0.17, 0.27, 0.92]
+# gmoMaxEnt = [0.78, 0.64, 0.49, 0.80, 0.79, 0.75, 0.69, 0.09, 0.86]
+# cart = [0.88, 0.58, 0.58, 0.75, 0.73, 0.71, 0.53, 0.65, 0.95]
+# minimumDistance = [0.71, 0.29, 0.50, 0.61, 0.64, 0.67, 0.55, 0.35, 0.93]
+
+
+# Create a DataFrame
+df = pd.DataFrame({
+    'RF': rf,
+    'SVM': svm,
+    'gmoMaxEnt': gmoMaxEnt,
+    'Cart': cart,
+    'minimumDistance': minimumDistance
+}, index=land_covers)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+from matplotlib.colors import LinearSegmentedColormap
+
+# (Your data and DataFrame creation code remains the same)
+
+# Set up the matplotlib figure
+fig, ax = plt.subplots(figsize=(8, 10))
+
+# Create a custom red-to-dark green color palette
+colors = ['#fe4a49','#f9654a','#e7cf85', '#27c390']  # Red, Yellow, Dark Green
+n_bins = 60  # Number of color gradations
+cmap = LinearSegmentedColormap.from_list('custom_RdYlGn', colors, N=n_bins)
+
+# Create the heatmap
+heatmap = sns.heatmap(df, annot=True, cmap=cmap, fmt='.2f', ax=ax,
+                      cbar_kws={'label': 'Performance Score'},
+                      annot_kws={'size': 23, 'weight': 'bold', 'color': 'black'})
+
+# Modify the colorbar (legend)
+cbar = heatmap.collections[0].colorbar
+cbar.set_label('F1-Score', fontsize=20, fontweight='bold',  labelpad=22)
+cbar.ax.tick_params(labelsize=23, length=0, labelcolor='black', width=0)  # Adjust tick label size and make them bold
+cbar.outline.set_visible(True)  # Keep the border around the colorbar
+
+# Set the range from 0 to 1
+cbar.set_ticks([0, 0.2, 0.4, 0.6, 0.8, 1])
+# cbar.set_ticklabels(['0', '0.20', '0.40', '0.60', '0.80', '1'])
+
+# Make tick labels bold
+cbar.ax.set_yticklabels(cbar.ax.get_yticklabels(), weight='bold')
+
+# Ensure the colorbar spans from 0 to 1
+cbar.vmin = 0
+cbar.vmax = 1
+
+
+# Set custom tick locations and labels
+tick_locator = plt.MaxNLocator(nbins=5)  # You can adjust the number of ticks
+cbar.locator = tick_locator
+cbar.update_ticks()
+
+# Customize the plot
+# plt.title('Model Performance Comparison Across Land Cover Classes', fontsize=16, fontweight='bold')
+# plt.ylabel('Land Cover Classes', fontsize=14, fontweight='bold')
+# plt.xlabel('Models', fontsize=14, fontweight='bold')
+
+# Increase font size for x and y tick labels
+plt.xticks(fontsize=25, fontweight='bold')
+plt.yticks(fontsize=27, fontweight='bold')
+
+# Adjust layout and display the plot
+plt.tight_layout()
+plt.show()
